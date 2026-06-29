@@ -2,6 +2,8 @@
 
 Synthetic transport domain backend built with **Node.js**, **TypeScript**, and the **Firebase Emulator Suite**. No production Firebase project is required — all development and tests run locally against emulators.
 
+[![Tests](https://github.com/dawit-Tegegnwork/node-firebase-mobile-backend/actions/workflows/test.yml/badge.svg)](https://github.com/dawit-Tegegnwork/node-firebase-mobile-backend/actions/workflows/test.yml)
+
 ## Stack
 
 | Layer | Technology |
