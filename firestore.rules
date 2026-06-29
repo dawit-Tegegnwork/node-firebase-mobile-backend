@@ -1,0 +1,90 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function userDoc() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function hasRole(role) {
+      return isSignedIn() && userDoc().role == role;
+    }
+
+    function isAdmin() {
+      return hasRole('admin');
+    }
+
+    function isDispatcher() {
+      return hasRole('dispatcher');
+    }
+
+    function isDriver() {
+      return hasRole('driver');
+    }
+
+    function isStaff() {
+      return isAdmin() || isDispatcher();
+    }
+
+    match /users/{userId} {
+      allow read: if isSignedIn() && (request.auth.uid == userId || isStaff());
+      allow create: if isAdmin();
+      allow update: if isAdmin() || (request.auth.uid == userId
+        && request.resource.data.role == resource.data.role);
+      allow delete: if isAdmin();
+    }
+
+    match /trips/{tripId} {
+      allow read: if isStaff()
+        || (isDriver() && resource.data.driverId == request.auth.uid);
+
+      allow create: if isStaff()
+        && request.resource.data.keys().hasAll([
+          'origin', 'destination', 'status', 'createdBy', 'createdAt', 'updatedAt'
+        ])
+        && request.resource.data.status == 'requested'
+        && request.resource.data.createdBy == request.auth.uid;
+
+      allow update: if isStaff()
+        || (isDriver()
+          && resource.data.driverId == request.auth.uid
+          && request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['status', 'updatedAt'])
+          && request.resource.data.status in ['en_route', 'completed']);
+
+      allow delete: if isAdmin();
+    }
+
+    match /supportTickets/{ticketId} {
+      allow read: if isStaff()
+        || (isSignedIn() && resource.data.createdBy == request.auth.uid);
+
+      allow create: if isSignedIn()
+        && request.resource.data.keys().hasAll([
+          'subject', 'body', 'status', 'createdBy', 'createdAt', 'updatedAt'
+        ])
+        && request.resource.data.status == 'open'
+        && request.resource.data.createdBy == request.auth.uid;
+
+      allow update: if isStaff()
+        || (isSignedIn()
+          && resource.data.createdBy == request.auth.uid
+          && request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['body', 'updatedAt'])
+          && resource.data.status == 'open');
+
+      allow delete: if isAdmin();
+    }
+
+    match /notifications/{notificationId} {
+      allow read: if isSignedIn()
+        && resource.data.recipientId == request.auth.uid;
+      allow create, update, delete: if false;
+    }
+  }
+}
