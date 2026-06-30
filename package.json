@@ -5,6 +5,8 @@
   "description": "Synthetic transport backend — Node.js, TypeScript, Firebase emulators",
   "scripts": {
     "build": "npm run build --prefix functions",
+    "demo": "npm run build && firebase emulators:start --project demo-transport",
+    "seed:emulator": "npm --prefix functions exec -- ts-node ../scripts/seed-emulator.ts",
     "test": "firebase emulators:exec --only firestore \"npm run test:unit --prefix functions\" --project demo-transport",
     "test:unit": "npm run test:unit --prefix functions",
     "lint": "npm run lint --prefix functions"

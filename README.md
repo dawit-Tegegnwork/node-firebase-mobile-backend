@@ -4,6 +4,13 @@ Synthetic transport domain backend built with **Node.js**, **TypeScript**, and t
 
 [![Tests](https://github.com/dawit-Tegegnwork/node-firebase-mobile-backend/actions/workflows/test.yml/badge.svg)](https://github.com/dawit-Tegegnwork/node-firebase-mobile-backend/actions/workflows/test.yml)
 
+## Demo scenario (3–5 minutes)
+
+1. `npm install` at repo root, then `npm install --prefix functions`
+2. `npm run demo` — starts Firebase emulators
+3. In another terminal: `FIRESTORE_EMULATOR_HOST=127.0.0.1:8085 npm run seed:emulator`
+4. Open Emulator UI at http://127.0.0.1:4000 — inspect trips collection
+
 ## Stack
 
 | Layer | Technology |
