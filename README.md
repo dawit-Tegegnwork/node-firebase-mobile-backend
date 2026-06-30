@@ -4,6 +4,51 @@ Synthetic transport domain backend built with **Node.js**, **TypeScript**, and t
 
 [![Tests](https://github.com/dawit-Tegegnwork/node-firebase-mobile-backend/actions/workflows/test.yml/badge.svg)](https://github.com/dawit-Tegegnwork/node-firebase-mobile-backend/actions/workflows/test.yml)
 
+This is a **production-style portfolio project** using **synthetic transport data** on the **Firebase Emulator Suite** — a reference implementation for mobile-backend patterns, not a deployed production Firebase project.
+
+## Live Demo
+
+| Channel | URL |
+|---------|-----|
+| **Cloud live demo** | Not configured — **local emulator demo only** |
+| **Emulator UI** | http://127.0.0.1:4000 after `npm run demo` |
+
+## Quick Test in 3 Minutes
+
+```bash
+npm install && npm install --prefix functions
+npm run demo
+# new terminal:
+FIRESTORE_EMULATOR_HOST=127.0.0.1:8085 npm run seed:emulator
+```
+
+1. Open http://127.0.0.1:4000 — Firebase Emulator UI  
+2. Inspect `trips` collection with seeded synthetic routes  
+3. Run `npm test` — emulator-backed integration tests  
+
+## Production-Style Features
+
+- TypeScript Cloud Functions (v2)  
+- Firestore security rules tested against emulator  
+- Seed script for repeatable demo data  
+- GitHub Actions CI with emulator  
+- `.env.example` for local configuration  
+
+## Health Check
+
+Emulator health is verified via the Emulator UI (port 4000) and `npm test`. No cloud `/health` endpoint — by design for local-only demo.
+
+## Synthetic Data Notice
+
+All trips, drivers, and passengers are **synthetic**. No production Firebase project or real user data is used.
+
+## What Recruiters Can Evaluate
+
+- Node.js + TypeScript backend structure  
+- Firebase Functions and Firestore patterns  
+- Emulator-based testing workflow  
+- Mobile-backend API design for transport domain  
+
 ## Demo scenario (3–5 minutes)
 
 1. `npm install` at repo root, then `npm install --prefix functions`
