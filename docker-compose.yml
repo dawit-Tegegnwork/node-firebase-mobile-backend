@@ -1,0 +1,13 @@
+services:
+  emulators:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "4000:4000"
+      - "8085:8080"
+      - "9099:9099"
+    command: sh -c "apk add --no-cache openjdk17-jre && npm install && npm run demo"
+    environment:
+      - FIREBASE_TOKEN=

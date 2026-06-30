@@ -10,8 +10,12 @@ This is a **production-style portfolio project** using **synthetic transport dat
 
 | Channel | URL |
 |---------|-----|
-| **Cloud live demo** | Not configured — **local emulator demo only** |
+| **Local emulator** | `docker compose up --build` or `npm run demo` — see [docs/DEMO.md](docs/DEMO.md) |
 | **Emulator UI** | http://127.0.0.1:4000 after `npm run demo` |
+
+## Screenshot
+
+![Firebase Emulator Suite](docs/screenshots/emulator.png)
 
 ## Quick Test in 3 Minutes
 
